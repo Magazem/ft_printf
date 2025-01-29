@@ -14,6 +14,7 @@ NAME		= libftprintf.a
 
 LIBFT		= ./libft/libft.a
 LIBFTDIR	= ./libft
+LIBFT_URL = https://github.com/Magazem/libft.git
 
 SRC			= ./files
 
@@ -30,6 +31,14 @@ CP			= cp
 
 all:		$(NAME)
 
+$(LIBFT): $(LIBFTDIR)
+	@$(MAKE) --no-print-directory bonus -C $(LIBFTDIR)
+
+$(LIBFTDIR):
+	@echo "$(CYAN)Downloading libft...$(NORMAL)"
+	git clone -q $(LIBFT_URL) $(LIBFTDIR)
+	@echo "$(GREEN)Libft downloaded successfully$(NORMAL)"
+
 $(NAME):	$(LIBFT) $(OBJS)
 				$(CP) $(LIBFT) $(NAME)
 				@$(AR) $(NAME) $(OBJS)
@@ -45,7 +54,7 @@ clean:
 			@$(RM) $(OBJS)
 
 fclean:		clean
-				@$(MAKE) fclean -C $(LIBFTDIR)
+				@$(RM) ${LIBFTDIR}
 				@$(RM) $(NAME)
 
 re:			fclean all
